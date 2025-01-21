@@ -31,12 +31,12 @@ public class Main {
             while ((line = reader.readLine()) != null) {
                 for (int idx = 0; idx < line.length(); idx++) {
                     if (line.charAt(idx) == '#') {
-                        logger.info("WALL ");
+                        logger.trace("WALL ");
                     } else if (line.charAt(idx) == ' ') {
-                        logger.info("PASS ");
+                        logger.trace("PASS ");
                     }
                 }
-                logger.info(System.lineSeparator());
+                logger.trace(System.lineSeparator());
             }
         } catch (ParseException e) {
             logger.error("Failed to parse command-line arguments", e);
@@ -45,7 +45,7 @@ public class Main {
         }
         logger.info("**** Computing path");
 
-        logger.info("PATH NOT COMPUTED");
+        logger.warn("PATH NOT COMPUTED");
 
         logger.info("** End of Maze Runner");
     }
