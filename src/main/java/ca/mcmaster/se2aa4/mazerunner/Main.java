@@ -50,3 +50,39 @@ public class Main {
         logger.info("** End of Maze Runner");
     }
 }
+
+public class Maze {
+    private final List<String> grid = new ArrayList<>();
+    private final Logger logger = LogManager.getLogger(Maze.class);
+
+    public Maze(String filePath) throws IOException {
+        logger.info("Loading maze from file: {}", filePath);
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                grid.add(line);
+            }
+        }
+        logger.info("Maze loaded successfully.");
+    }
+
+    public char getCell(int row, int col) {
+        return grid.get(row).charAt(col);
+    }
+
+    public int getHeight() {
+        return grid.size();
+    }
+
+    public int getWidth() {
+        return grid.get(0).length();
+    }
+
+    public boolean isWall(int row, int col) {
+        return getCell(row, col) == '#';
+    }
+
+    public boolean isPassage(int row, int col) {
+        return getCell(row, col) == ' ';
+    }
+}
