@@ -12,6 +12,10 @@ public class Path {
     }
 
     public String getFactorizedForm() {
+        if (steps.length() == 0) {
+            return "";
+        }
+
         StringBuilder factorized = new StringBuilder();
         int count = 1;
 
@@ -23,8 +27,10 @@ public class Path {
                 count = 1;
             }
         }
-
+        
         factorized.append(count > 1 ? count : "").append(steps.charAt(steps.length() - 1));
+
         return factorized.toString();
     }
+
 }
