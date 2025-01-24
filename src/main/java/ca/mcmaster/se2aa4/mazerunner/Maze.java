@@ -61,33 +61,37 @@ public class Maze {
         Point entry = null;
         Point exit = null;
     
-        
+        // Check for entry point on the left wall and corresponding exit on the right wall
         for (int i = 0; i < height; i++) {
-            if (mazeGrid[i][0] == ' ') { 
+            if (mazeGrid[i][0] == ' ') { // Left wall
                 entry = new Point(0, i);
-                exit = findExitOnRightWall();
+                exit = findExitOnRightWall(); // Find corresponding exit
                 break;
             }
         }
     
-        
+        // If no entry found on the left wall, check the right wall and corresponding exit on the left wall
         if (entry == null) {
             for (int i = 0; i < height; i++) {
                 if (mazeGrid[i][width - 1] == ' ') { // Right wall
                     entry = new Point(width - 1, i);
-                    exit = findExitOnLeftWall();
+                    exit = findExitOnLeftWall(); // Find corresponding exit
                     break;
                 }
             }
         }
     
-    
+        // Validate that both entry and exit points are found
         if (entry == null || exit == null) {
+            logger.error("Maze does not have a valid entry and exit point.");
             throw new IllegalArgumentException("Maze must have an entry and an exit point.");
         }
     
+        logger.info("Entry point found at: ({}, {}), Exit point found at: ({}, {})",
+                    entry.x, entry.y, exit.x, exit.y);
         return new Point[]{entry, exit};
     }
+    
     
     
     private Point findExitOnRightWall() {
