@@ -1,12 +1,8 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import java.io.FileNotFoundException;
-
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
+import java.io.*;
+import java.util.*;
+import org.apache.commons.cli.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,7 +14,6 @@ public class Main {
         options.addOption("i", "input", true, "Path to the input maze file");
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd;
-
 
         try {
             cmd = parser.parse(options, args);
@@ -32,21 +27,52 @@ public class Main {
 
             String inputPath = cmd.getOptionValue("i");
 
-            Maze maze = new Maze(inputPath);
+            
+            List<String> mazeGrid = new ArrayList<>();
+            try (BufferedReader reader = new BufferedReader(new FileReader(inputPath))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    mazeGrid.add(line); 
+                }
+            } catch (IOException e) {
+                System.out.println("/!\\ An error has occurred /!\\");
+                System.out.println("Error: File not found - " + inputPath);
+                System.out.println("PATH NOT COMPUTED");
+                return;
+            }
+
+            
+            if (mazeGrid.isEmpty()) {
+                System.out.println("/!\\ An error has occurred /!\\");
+                System.out.println("Error: Maze file is empty.");
+                System.out.println("PATH NOT COMPUTED");
+                return;
+            }
+
+            
+            logger.debug("Maze content:");
+            for (String row : mazeGrid) {
+                logger.debug(row);
+            }
+
+            
+            Maze maze = new Maze(mazeGrid);
+
+        
             MazeExplorer explorer = new MazeExplorer(maze);
             Path path = explorer.computePath();
             System.out.println("Canonical Path: " + path.getCanonicalForm());
-        } catch (FileNotFoundException e) {
-            System.out.println("/!\\ An error has occurred /!\\");
-            System.out.println("Error: File not found - ");
-            System.out.println("PATH NOT COMPUTED");
         } catch (ParseException e) {
             System.out.println("/!\\ An error has occurred /!\\");
             System.out.println("Error: Failed to parse command-line arguments.");
             System.out.println("PATH NOT COMPUTED");
+        } catch (IllegalArgumentException e) {
+            System.out.println("/!\\ An error has occurred /!\\");
+            System.out.println("Error: " + e.getMessage());
+            System.out.println("PATH NOT COMPUTED");
         } catch (Exception e) {
             System.out.println("/!\\ An error has occurred /!\\");
-            System.out.println("An unexpected error occurred: ");
+            System.out.println("An unexpected error occurred: " + e.getMessage());
             System.out.println("PATH NOT COMPUTED");
         }
     }

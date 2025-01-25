@@ -39,9 +39,7 @@ public class MazeExplorer {
         Path path = new Path();
     
         try {
-            while (x != exitPoint.x || y != exitPoint.y) { 
-    
-    
+            while (x != exitPoint.x || y != exitPoint.y) {
                 if (canMoveForward()) {
                     moveForward();
                     path.addStep('F');
@@ -65,6 +63,7 @@ public class MazeExplorer {
     
         return path;
     }
+    
     
     private boolean canMoveLeft() {
         int newX = x;
