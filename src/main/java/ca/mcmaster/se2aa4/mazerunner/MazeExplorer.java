@@ -169,4 +169,15 @@ public class MazeExplorer {
 
         return maze.isValidMove(newX, newY);
     }
+
+    public void rightHandRule(){
+        moveForward();
+        if (canMoveRight()) {
+            turnRight();
+        } else if (canMoveForward()) {
+            moveForward();
+        } else {
+            turnLeft();
+        }
+    }
 }
