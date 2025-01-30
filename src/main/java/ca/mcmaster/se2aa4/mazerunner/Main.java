@@ -18,10 +18,6 @@ public class Main {
     private static final Logger logger = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
-        System.out.println("Debug: Command-line arguments received:");
-        for (String arg : args) {
-            System.out.println("  " + arg);
-        }
 
         Options options = new Options();
         options.addOption("i", "input", true, "Path to the input maze file");

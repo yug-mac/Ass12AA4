@@ -15,7 +15,7 @@ public class Maze {
     public Maze(List<String> grid) {
         this.height = grid.size();
         this.width = grid.stream().mapToInt(String::length).max().orElse(0); 
-        this.mazeGrid = new char[height][width];
+        this.mazeGrid = new char[width][height];
 
         for (int i = 0; i < height; i++) {
             String row = grid.get(i);
@@ -63,20 +63,13 @@ public class Maze {
             throw new IllegalArgumentException("Maze must have both an entry and an exit.");
         }
 
-        logger.debug("Entry Point: (" + entry.x + ", " + entry.y + ")");
-        logger.debug("Exit Point: (" + exit.x + ", " + exit.y + ")");
+        logger.info("Entry Point: (" + entry.x + ", " + entry.y + ")");
+        logger.info("Exit Point: (" + exit.x + ", " + exit.y + ")");
 
         return new Point[]{entry, exit};
     }
 
     public boolean isValidMove(int x, int y) {
         return x >= 0 && x < width && y >= 0 && y < height && mazeGrid[y][x] == ' ';
-    }
-
-    public void printMaze() {
-        System.out.println("Processed Maze:");
-        for (char[] row : mazeGrid) {
-            System.out.println(new String(row));
-        }
     }
 }

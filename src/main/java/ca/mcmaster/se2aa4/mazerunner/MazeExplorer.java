@@ -19,21 +19,14 @@ public class MazeExplorer {
 
         this.x = entryPoint.x;
         this.y = entryPoint.y;
-
-        if (x == 0) { 
-            this.currentDirection = 'E'; 
-        } else if (x == maze.getWidth() - 1) { 
-            this.currentDirection = 'W'; 
-        } else if (y == 0) {
-            this.currentDirection = 'S'; 
-        } else {
-            this.currentDirection = 'N'; 
-        }
+        this.currentDirection = 'E';
+        //hard code East as direction
     }
 
     public Path computePath() {
         Path path = new Path();
 
+        //RHR logic
         try {
             while (x != exitPoint.x || y != exitPoint.y) {
                 if (canMoveRight()) {  
