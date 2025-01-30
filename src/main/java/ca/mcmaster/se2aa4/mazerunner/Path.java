@@ -11,4 +11,25 @@ public class Path {
         return steps.toString();
     }
 
+    public String getFactorized() {
+        StringBuilder factorized = new StringBuilder();
+        int count = 1;
+        for (int i = 1; i < steps.length(); i++) {
+            if (steps.charAt(i) == steps.charAt(i - 1)) {
+                count++;
+            } else {
+                factorized.append(steps.charAt(i - 1));
+                if (count > 1) {
+                    factorized.append(count);
+                }
+                count = 1;
+            }
+        }
+        factorized.append(steps.charAt(steps.length() - 1));
+        if (count > 1) {
+            factorized.append(count);
+        }
+        return factorized.toString();
+    }
+
 }

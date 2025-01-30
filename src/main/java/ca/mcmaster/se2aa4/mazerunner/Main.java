@@ -25,30 +25,29 @@ public class Main {
 
         Options options = new Options();
         options.addOption("i", "input", true, "Path to the input maze file");
+        options.addOption("p", "path", true, "Path string to validate");
+
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd;
 
         try {
             cmd = parser.parse(options, args);
             if (!cmd.hasOption("i")) {
-                System.out.println("**** Reading the maze from file: <no file specified>");
                 System.out.println("/!\\ An error has occurred /!\\");
+                System.out.println("Error: No maze file specified.");
                 System.out.println("PATH NOT COMPUTED");
-                System.out.println("** End of Maze Runner");
                 return;
             }
 
             String inputPath = cmd.getOptionValue("i");
-
             System.out.println("Debug: Input file path received: " + inputPath);
+
 
             List<String> mazeGrid = new ArrayList<>();
             try (BufferedReader reader = new BufferedReader(new FileReader(inputPath))) {
                 String line;
-                System.out.println("Debug: Reading maze file content...");
                 while ((line = reader.readLine()) != null) {
                     mazeGrid.add(line);
-                    System.out.println("  " + line); 
                 }
             } catch (IOException e) {
                 System.out.println("/!\\ An error has occurred /!\\");
@@ -64,16 +63,28 @@ public class Main {
                 return;
             }
 
-            logger.debug("Maze content:");
-            for (String row : mazeGrid) {
-                logger.debug(row);
+            Maze maze = new Maze(mazeGrid);
+            MazeExplorer explorer = new MazeExplorer(maze);
+
+ 
+            if (cmd.hasOption("p")) {
+                String providedPath = cmd.getOptionValue("p").trim();
+                System.out.println("Debug: Checking provided path: " + providedPath);
+                
+                boolean isValid = explorer.isValidPath(providedPath);
+                
+                if (isValid) {
+                    System.out.println("Valid path.");
+                } else {
+                    System.out.println("Invalid path.");
+                }
+                return;
             }
 
-            Maze maze = new Maze(mazeGrid);
-            maze.printMaze();  
-            MazeExplorer explorer = new MazeExplorer(maze);
+
             Path path = explorer.computePath();
             System.out.println("Canonical Path: " + path.getCanonicalForm());
+            System.out.println("Factorized Path: " + path.getFactorized());
 
         } catch (ParseException e) {
             System.out.println("/!\\ An error has occurred /!\\");
