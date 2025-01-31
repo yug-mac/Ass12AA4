@@ -1,6 +1,7 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
 import java.awt.Point;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,13 +21,13 @@ public class MazeExplorer {
         this.x = entryPoint.x;
         this.y = entryPoint.y;
         this.currentDirection = 'E';
-        //hard code East as direction
+        
     }
 
     public Path computePath() {
         Path path = new Path();
 
-        //RHR logic
+        
         try {
             while (x != exitPoint.x || y != exitPoint.y) {
                 if (canMoveRight()) {  
