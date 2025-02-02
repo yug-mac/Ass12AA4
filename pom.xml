@@ -9,7 +9,7 @@
 
   <groupId>io.github.ace-lectures.2aa4</groupId>
   <!-- Replace this with your MacId. E.g., mine would be a1-mossers -->
-  <artifactId>a1-vashisty</artifactId>
+  <artifactId>vashisty</artifactId>
   <version>1.0</version>
   <name>McMaster :: SFWRENG :: 2AA4 :: Maze Runner</name>
 
@@ -19,7 +19,6 @@
     <maven.compiler.target>17</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
-
 
   <dependencies>
     <!-- To read arguments from command line-->
@@ -81,6 +80,5 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-  
 
 </project>
