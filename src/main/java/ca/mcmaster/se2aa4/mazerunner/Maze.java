@@ -16,7 +16,6 @@ public class Maze {
         this.height = grid.size();
         this.width = grid.stream().mapToInt(String::length).max().orElse(0);
     
-        System.out.println("Reading maze... Expected width: " + width);
         
         this.mazeGrid = new char[height][width];
     
@@ -30,15 +29,13 @@ public class Maze {
     
             mazeGrid[i] = row.toCharArray();
             
-
-            System.out.println("Row " + i + " (length " + row.length() + "): " + row);
         }
     
-        printMaze();  
+        //printMaze();  
     }
     
 
-    public void printMaze() {
+    /*public void printMaze() {
         System.out.println("\nMaze Layout:");
         logger.info("Maze Layout:");
         
@@ -50,6 +47,7 @@ public class Maze {
             System.out.println(row.toString());  
         }
     }
+   */
 
     public int getWidth() {
         return width;
@@ -60,7 +58,6 @@ public class Maze {
     }
 
     public Point[] getEntryAndExitPoints() {
-        // Delegating entry/exit point detection to a separate class
         MazeEntryExitFinder finder = new MazeEntryExitFinder(mazeGrid, width, height);
         return finder.findEntryAndExit();
     }

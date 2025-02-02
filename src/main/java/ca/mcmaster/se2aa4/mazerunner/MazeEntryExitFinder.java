@@ -24,14 +24,14 @@ public class MazeEntryExitFinder {
         for (int y = 0; y < height; y++) {
             if (mazeGrid[y][0] == ' ') {
                 entry = new Point(0, y);
-                logger.info("Entry point found at: (" + entry.x + ", " + entry.y + ")");
+                //ogger.info("Entry point found at: (" + entry.x + ", " + entry.y + ")");
                 break;
             }
         }
         for (int y = 0; y < height; y++) {
             if (mazeGrid[y][width - 1] == ' ') {
                 exit = new Point(width - 1, y);
-                logger.info("Exit point found at: (" + exit.x + ", " + exit.y + ")");
+                //logger.info("Exit point found at: (" + exit.x + ", " + exit.y + ")");
                 break;
             }
         }
@@ -40,8 +40,8 @@ public class MazeEntryExitFinder {
             throw new IllegalArgumentException("Maze must have both an entry and an exit.");
         }
 
-        logger.info("Entry Point: (" + entry.x + ", " + entry.y + ")");
-        logger.info("Exit Point: (" + exit.x + ", " + exit.y + ")");
+        //logger.info("Entry Point: (" + entry.x + ", " + entry.y + ")");
+        //ogger.info("Exit Point: (" + exit.x + ", " + exit.y + ")");
 
         return new Point[]{entry, exit};
     }

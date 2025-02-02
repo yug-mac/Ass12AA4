@@ -36,7 +36,6 @@ public class Main {
             }
 
             String inputPath = cmd.getOptionValue("i");
-            System.out.println("Debug: Input file path received: " + inputPath);
 
 
             List<String> mazeGrid = new ArrayList<>();
@@ -70,9 +69,9 @@ public class Main {
                 boolean isValid = explorer.isValidPath(providedPath);
                 
                 if (isValid) {
-                    System.out.println("Valid path.");
+                    System.out.println("Correct path.");
                 } else {
-                    System.out.println("Invalid path.");
+                    System.out.println("Incorrect path.");
                 }
                 return;
             }

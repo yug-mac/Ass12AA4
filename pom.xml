@@ -20,6 +20,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
+
   <dependencies>
     <!-- To read arguments from command line-->
     <dependency>
@@ -79,6 +80,7 @@
         <type>pom</type>
       </dependency>
     </dependencies>
-</dependencyManagement>
+  </dependencyManagement>
+  
 
 </project>
