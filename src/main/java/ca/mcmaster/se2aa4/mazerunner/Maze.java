@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
  */
 public class Maze {
     
-    /** Logger instance for logging debugging**//
+    /** Logger instance for logging debugging
     private static final Logger logger = LogManager.getLogger(Maze.class);
     
     /** 2D character array representing the maze grid. */
