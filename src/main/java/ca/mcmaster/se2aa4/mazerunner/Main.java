@@ -18,7 +18,7 @@ import org.apache.logging.log4j.Logger;
  * MacID: vashisty, 400501750
  * Maze runner main class.
  * Parses command-line arguments, reads a maze file, and computes or validates paths.
- *
+ * FINAL
  */
 public class Main {
     
