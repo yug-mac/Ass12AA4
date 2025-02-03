@@ -77,7 +77,6 @@ public class Main {
             // Check if the user provided a path to validate
             if (cmd.hasOption("p")) {
                 String providedPath = cmd.getOptionValue("p").trim();
-                System.out.println("Debug: Checking provided path: " + providedPath);
                 
                 boolean isValid = explorer.isValidPath(providedPath);
                 
