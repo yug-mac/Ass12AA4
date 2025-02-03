@@ -14,11 +14,20 @@ import org.apache.commons.cli.ParseException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**Name: Yug vashisth
+ * MacID: vashisty, 400501750
+ * Maze runner main class.
+ * Parses command-line arguments, reads a maze file, and computes or validates paths.
+ *
+ */
 public class Main {
+    
+    /** Logger instance for debugging purposes*/
     private static final Logger logger = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
-
+        
+        // Define command-line options
         Options options = new Options();
         options.addOption("i", "input", true, "Path to the input maze file");
         options.addOption("p", "path", true, "Path string to validate");
@@ -27,6 +36,7 @@ public class Main {
         CommandLine cmd;
 
         try {
+            // Parse command-line arguments
             cmd = parser.parse(options, args);
             if (!cmd.hasOption("i")) {
                 System.out.println("/!\\ An error has occurred /!\\");
@@ -35,9 +45,10 @@ public class Main {
                 return;
             }
 
+            // Retrieve input file path from command-line arguments
             String inputPath = cmd.getOptionValue("i");
 
-
+            // Read the maze file into a list of strings
             List<String> mazeGrid = new ArrayList<>();
             try (BufferedReader reader = new BufferedReader(new FileReader(inputPath))) {
                 String line;
@@ -51,6 +62,7 @@ public class Main {
                 return;
             }
 
+            // Check if the maze file is empty
             if (mazeGrid.isEmpty()) {
                 System.out.println("/!\\ An error has occurred /!\\");
                 System.out.println("Error: Maze file is empty.");
@@ -58,10 +70,11 @@ public class Main {
                 return;
             }
 
+            // Create a Maze object and a MazeExplorer instance
             Maze maze = new Maze(mazeGrid);
             MazeExplorer explorer = new MazeExplorer(maze);
 
- 
+            // Check if the user provided a path to validate
             if (cmd.hasOption("p")) {
                 String providedPath = cmd.getOptionValue("p").trim();
                 System.out.println("Debug: Checking provided path: " + providedPath);
@@ -76,20 +89,23 @@ public class Main {
                 return;
             }
 
-
+            // Compute and display the canonical and factorized path
             Path path = explorer.computePath();
             System.out.println("Canonical Path: " + path.getCanonicalForm());
             System.out.println("Factorized Path: " + path.getFactorized());
 
         } catch (ParseException e) {
+            // Handle command-line argument parsing errors
             System.out.println("/!\\ An error has occurred /!\\");
             System.out.println("Error: Failed to parse command-line arguments.");
             System.out.println("PATH NOT COMPUTED");
         } catch (IllegalArgumentException e) {
+            // Handle invalid arguments
             System.out.println("/!\\ An error has occurred /!\\");
             System.out.println("Error: " + e.getMessage());
             System.out.println("PATH NOT COMPUTED");
         } catch (Exception e) {
+            // Catch-all for unexpected errors
             System.out.println("/!\\ An error has occurred /!\\");
             System.out.println("An unexpected error occurred: " + e.getMessage());
             System.out.println("PATH NOT COMPUTED");
