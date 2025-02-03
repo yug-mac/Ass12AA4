@@ -31,23 +31,8 @@ public class Maze {
             
         }
     
-        //printMaze();  
     }
     
-
-    /*public void printMaze() {
-        System.out.println("\nMaze Layout:");
-        logger.info("Maze Layout:");
-        
-        for (int y = 0; y < height; y++) {
-            StringBuilder row = new StringBuilder();
-            for (int x = 0; x < width; x++) {
-                row.append(mazeGrid[y][x]);  
-            }
-            System.out.println(row.toString());  
-        }
-    }
-   */
 
     public int getWidth() {
         return width;
