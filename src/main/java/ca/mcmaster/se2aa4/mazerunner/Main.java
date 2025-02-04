@@ -90,7 +90,6 @@ public class Main {
 
             // Compute and display the canonical and factorized path
             Path path = explorer.computePath();
-            System.out.println("Canonical Path: " + path.getCanonicalForm());
             System.out.println("Factorized Path: " + path.getFactorized());
 
         } catch (ParseException e) {
