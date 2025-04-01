@@ -1,4 +1,5 @@
 package ca.mcmaster.se2aa4.mazerunner;
+import java.io.IOException;
 
 import java.awt.Point;
 import java.util.List;
@@ -91,4 +92,60 @@ void testPathRepresentations() {
     assertEquals("2R3F", path.getFactorized());
 }
 
+@Test
+void testPathOutput() {
+    Path path = new Path();
+    path.addStep('F');
+    path.addStep('F');
+    path.addStep('F');
+
+    assertEquals("FFF", path.getCanonicalForm());
+}
+
+
+@Test
+void testValidMovesOnBoundary(){
+
+    assertTrue(maze.isValidMove(0, 1)); // top boundary
+    assertTrue(maze.isValidMove(2, 1)); // bottom boundary
+
+    assertFalse(maze.isValidMove(0, 0)); // top-left corner
+    assertFalse(maze.isValidMove(2, 2)); // bottom-left corner
+}
+
+@Test
+void testGetEntryAndExitPointsLargeMaze() {
+    List<String> grid = List.of(
+        "# # # #",
+        "       ",
+        "# # # #"
+    );
+    Maze largeMaze = new Maze(grid);
+    Point[] points = largeMaze.getEntryAndExitPoints();
+    assertNotNull(points);
+    assertEquals(2, points.length);
+
+    // Check they are on the boundary and open paths
+    for (Point p : points) {
+        assertTrue(p.x == 0 || p.x == largeMaze.getWidth() - 1 || p.y == 0 || p.y == largeMaze.getHeight() - 1);
+        assertTrue(largeMaze.isValidMove(p.x, p.y));
+    }
+
+}
+
+@Test
+void testMissingEntryorExitThrows(){
+    List<String> badGrid = List.of(
+        "###",
+        "###",
+        "###"
+    );
+    Maze badMaze = new Maze(badGrid);
+
+    Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+        badMaze.getEntryAndExitPoints();
+    });
+
+    assertEquals("Maze must have both an entry and an exit.", exception.getMessage());
+}
 }
