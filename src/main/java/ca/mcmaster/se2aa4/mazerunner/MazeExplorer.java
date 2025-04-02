@@ -174,10 +174,11 @@ public class MazeExplorer {
      * Checks if the path is valid or invalid based off of the path string
      */
     public boolean isValidPath(String path) {
+        String expandedPath = expandFactorizedPath(path);
         int tempX = x, tempY = y;
         char tempDir = currentDirection;
     
-        for (char move : path.toCharArray()) {
+        for (char move : expandedPath.toCharArray()) {
             if (move == 'F') {
                 int[] nextPos = getNextPosition(tempX, tempY, tempDir);
                 if (!maze.isValidMove(nextPos[0], nextPos[1])) return false;
@@ -194,6 +195,34 @@ public class MazeExplorer {
     
         return tempX == exitPoint.x && tempY == exitPoint.y;
     }
+    
+    private String expandFactorizedPath(String factorizedPath) {
+        StringBuilder expanded = new StringBuilder();
+        int i = 0;
+    
+        while (i < factorizedPath.length()) {
+            char c = factorizedPath.charAt(i);
+    
+            // If it's a digit, parse full number (in case of 12F etc.)
+            if (Character.isDigit(c)) {
+                int j = i;
+                while (j < factorizedPath.length() && Character.isDigit(factorizedPath.charAt(j))) {
+                    j++;
+                }
+                int count = Integer.parseInt(factorizedPath.substring(i, j));
+                if (j >= factorizedPath.length()) return ""; // malformed, e.g. "4"
+                char move = factorizedPath.charAt(j);
+                expanded.append(String.valueOf(move).repeat(count));
+                i = j + 1;
+            } else {
+                expanded.append(c);
+                i++;
+            }
+        }
+    
+        return expanded.toString();
+    }
+    
     /**
      * gets the nextposotiion of the movement, has three parameters, the current x and y position and the direction
      */

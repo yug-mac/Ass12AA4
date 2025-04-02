@@ -70,8 +70,9 @@ public class Main {
                 return;
             }
 
-            // Create a Maze object and a MazeExplorer instance
-            Maze maze = new Maze(mazeGrid);
+            
+            MazeFactory factory = new BasicMazeFactory();
+            Maze maze = factory.createMaze(mazeGrid);   //implementing the factory pattern as required
             MazeExplorer explorer = new MazeExplorer(maze);
 
             // Check if the user provided a path to validate
