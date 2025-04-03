@@ -63,4 +63,5 @@ public class MazeEntryExitFinder {
 
         return new Point[]{entry, exit};
     }
+    
 }
