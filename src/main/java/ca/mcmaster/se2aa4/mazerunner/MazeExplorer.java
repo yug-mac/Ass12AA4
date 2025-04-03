@@ -1,6 +1,8 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -41,6 +43,17 @@ public class MazeExplorer {
         this.y = entryPoint.y;
         this.currentDirection = 'E'; //current direwction starts off at eats
     }
+    private final List<MazeObserver> observers = new ArrayList<>();
+
+public void addObserver(MazeObserver observer) {
+    observers.add(observer);
+}
+
+private void notifyObservers(String action) {
+    for (MazeObserver observer : observers) {
+        observer.update(x, y, action, currentDirection);
+    }
+}
 
     /**
      * Computes a valid path from the entry point to the exit point.
@@ -141,6 +154,7 @@ public class MazeExplorer {
      */
     private void turnLeft() {
         currentDirection = getNewDirection(currentDirection, 'L');
+        notifyObservers("TURN_LEFT");
     }
 
     /**
@@ -168,6 +182,8 @@ public class MazeExplorer {
         else if (currentDirection == 'E') x += 1;
         else if (currentDirection == 'S') y += 1;
         else if (currentDirection == 'W') x -= 1;
+    
+        notifyObservers("MOVE_FORWARD");
     }
 
     /**

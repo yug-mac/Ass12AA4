@@ -74,6 +74,7 @@ public class Main {
             MazeFactory factory = new BasicMazeFactory();
             Maze maze = factory.createMaze(mazeGrid);   //implementing the factory pattern as required
             MazeExplorer explorer = new MazeExplorer(maze);
+            explorer.addObserver(new ConsoleMazeObserver());
 
             // Check if the user provided a path to validate
             if (cmd.hasOption("p")) {
