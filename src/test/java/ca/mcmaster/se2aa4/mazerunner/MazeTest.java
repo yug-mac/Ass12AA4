@@ -21,22 +21,22 @@ public class MazeTest {
         maze = new Maze(grid);
     }
 
-    // ------------------ Maze Core Functionality Tests ------------------
+    // basic tests created for code before refactoring the database
 
-     @Test
+     @Test //Test 1 (dimensions test)
     void testDimensions() {
         assertEquals(3, maze.getWidth());
         assertEquals(3, maze.getHeight());
     }
 
     @Test
-    void testIsValidMove() {
+    void testIsValidMove() { //Test 2 (testing validiity of the move)
         assertTrue(maze.isValidMove(1, 1));  // center
         assertFalse(maze.isValidMove(0, 0)); // wall
         assertFalse(maze.isValidMove(3, 1)); // out of bounds
     }
 
-     @Test
+     @Test //Test 3 (testing the move)
     void testValidMovesOnBoundary() {
         assertTrue(maze.isValidMove(0, 1)); // left boundary
         assertTrue(maze.isValidMove(2, 1)); // right boundary
@@ -44,7 +44,7 @@ public class MazeTest {
         assertFalse(maze.isValidMove(2, 2)); // bottom-right wall
     }
 
-    @Test
+    @Test // Test 4 (testing the exit and entry points + validity)
     void testGetEntryAndExitPoints() {
         Point[] points = maze.getEntryAndExitPoints();
         assertNotNull(points);
@@ -56,7 +56,7 @@ public class MazeTest {
         }
     }
 
-      @Test
+      @Test // Test 5 (testing the entry and exit points in a large maze)
      void testGetEntryAndExitPointsLargeMaze() {
         List<String> grid = List.of(
             "# # # #",
@@ -74,7 +74,7 @@ public class MazeTest {
         }
     }
 
-    @Test
+    @Test // Test 6 (testing the entry and exit points in a large maze with no entry or exit)
     void testMissingEntryOrExitThrows() {
         List<String> badGrid = List.of(
             "###",
@@ -90,9 +90,9 @@ public class MazeTest {
         assertEquals("Maze must have both an entry and an exit.", exception.getMessage());
     }
 
-    // ------------------ MazeExplorer Tests ------------------
+    
 
-    @Test
+    @Test // Test 7 (testing the entry and exit points in a large maze with no entry or exit, it finfs the path)
     void testMazeExplorerFindsPath() {
         MazeExplorer explorer = new MazeExplorer(maze);
         Path path = explorer.computePath();
@@ -101,7 +101,7 @@ public class MazeTest {
         assertFalse(explorer.isValidPath(path.getCanonicalForm()));
     }
 
-    @Test
+    @Test //Test 8 (adding tan instance of observer
     void testAddObserver() {
         MazeExplorer explorer = new MazeExplorer(maze);
         MazeObserver observer = new ConsoleMazeObserver();
@@ -109,9 +109,9 @@ public class MazeTest {
         assertNotNull(explorer);
     }
 
-    // ------------------ Path Tests ------------------
 
-    @Test
+
+    @Test //Test 9 (testing the path representation)
     void testPathRepresentations() {
         Path path = new Path();
         path.addStep('R');
@@ -124,7 +124,7 @@ public class MazeTest {
         assertEquals("2R3F", path.getFactorized());
     }
 
-    @Test
+    @Test //Test 10 (testing if output is valid)
     void testPathOutput() {
         Path path = new Path();
         path.addStep('F');
@@ -134,9 +134,9 @@ public class MazeTest {
         assertEquals("FFF", path.getCanonicalForm());
     }
 
-    // ------------------ Factory Pattern Tests ------------------
+    // Test for the patterns I created
 
-    @Test
+    @Test //Test 11 (testing if factory can create maze)
     void testFactoryCreatesMaze() {
         MazeFactory factory = new BasicMazeFactory();
         List<String> grid = List.of(
@@ -150,7 +150,7 @@ public class MazeTest {
         assertEquals(Maze.class, createdMaze.getClass());
     }
 
-    @Test
+    @Test //Test12 (testing if factory can create maze with walls)
     void testFactoryMazeDimensions() {
         MazeFactory factory = new BasicMazeFactory();
         List<String> grid = List.of(
@@ -163,7 +163,7 @@ public class MazeTest {
        assertEquals(3, createdMaze.getHeight());
     }
 
-   @Test
+   @Test //Test13 (testinf if maze can see the valid exit and enetry pts)
 void testFactoryMazeWithValidEntryAndExit() {
     MazeFactory factory = new BasicMazeFactory();
     List<String> grid = List.of(
@@ -192,7 +192,7 @@ void testFactoryMazeWithValidEntryAndExit() {
         "Exit point is not on the boundary."
     );
 }
-    @Test
+    @Test //Test14 (see if factiory can throw exception on no entry or exit)
     void testFactoryThrowsOnNoEntryOrExit() {
         MazeFactory factory = new BasicMazeFactory();
         List<String> grid = List.of(
@@ -206,7 +206,8 @@ void testFactoryMazeWithValidEntryAndExit() {
         assertEquals("Maze must have both an entry and an exit.", exception.getMessage());
     }
 
-    @Test
+    //Observer Tests
+    @Test //Test15 (See if observer can contsatntly log and update with every move and turn)
 void testObserverIsNotifiedOnMoveAndTurn() {
     List<String> grid = List.of(
         "# #",
@@ -245,7 +246,7 @@ void testObserverIsNotifiedOnMoveAndTurn() {
     assertTrue(observer.lastDirection == 'E' || observer.lastDirection == 'N' || observer.lastDirection == 'W' || observer.lastDirection == 'S');
 }
 
-@Test
+@Test //Test 16 (see if multiple observers can be added and notified)
 void testMultipleObserversReceiveUpdate() {
     MazeExplorer explorer = new MazeExplorer(maze);
 
@@ -271,7 +272,7 @@ void testMultipleObserversReceiveUpdate() {
     assertTrue(observer1.count > 0);
 }
 
-@Test
+@Test //Test 17 (see if factory can handle uneven row lengths)
 void testFactoryMazeHandlesUnevenRowLengths() {
     MazeFactory factory = new BasicMazeFactory();
     List<String> grid = List.of(
@@ -285,7 +286,7 @@ void testFactoryMazeHandlesUnevenRowLengths() {
     assertEquals(5, maze.getWidth());
     assertEquals(3, maze.getHeight());
 }
-@Test
+@Test //Test 18 (see if factory can handle empty list)
 void testFactoryCreatesMazeFromEmptyList() {
     MazeFactory factory = new BasicMazeFactory();
     List<String> grid = List.of();
@@ -294,7 +295,7 @@ void testFactoryCreatesMazeFromEmptyList() {
     assertEquals(0, emptyMaze.getHeight());
     assertEquals(0, emptyMaze.getWidth());
 }
-@Test
+@Test //Test 19 (see if observer can handle specifc actions and log)
 void testObserverReceivesSpecificActions() {
     MazeExplorer explorer = new MazeExplorer(maze);
 
@@ -316,7 +317,7 @@ void testObserverReceivesSpecificActions() {
     assertTrue(observer.sawMove);
     // Turn is only notified on LEFT in your implementation (not RIGHT) — adjust accordingly
 }
-@Test
+@Test //Test 20 (see if observer can handle direction updates)
 void testObserverDirectionUpdates() {
     MazeExplorer explorer = new MazeExplorer(maze);
 
